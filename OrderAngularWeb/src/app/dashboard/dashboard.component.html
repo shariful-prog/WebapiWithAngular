@@ -1,0 +1,25 @@
+<app-navigation></app-navigation>
+<div class="container">
+    <button class="btn btn-success" >Add New Order</button>
+    <table class="table table-bordered" >
+      <thead>
+          <tr>
+              <th>#</th>
+              <th>Customer</th>
+              <th>Order Value</th>
+              <th>Order Date</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody >
+          <tr *ngFor="let order of orderList; let i=index">
+              <td> {{i+1}} </td>
+              <td> {{order.customerName}} </td>
+              <td> {{order.grossValue}} </td>
+              <td> {{order.orderDate |date:'dd/MM/yyyy'}} </td>
+              <td> <button class="btn btn-sm btn-info">View</button> </td>
+          </tr>
+      </tbody>
+  </table>
+
+</div>
