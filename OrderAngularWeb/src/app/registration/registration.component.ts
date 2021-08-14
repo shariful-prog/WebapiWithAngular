@@ -11,26 +11,28 @@ import { ToastrService } from 'ngx-toastr';
 export class RegistrationComponent implements OnInit {
  
   registerForm: FormGroup;
-  submitted = false;
+   submitted = false;
   constructor(private formBuilder: FormBuilder,
     private userServics:UserServicsService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.resetForm();
+   this.formValueIntialization();
   }
 
-  resetForm(){
-    this.registerForm = this.formBuilder.group({
-      userName: ['', Validators.required],
-      fullName: ['', Validators.required],
-      address: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      confirmPassword: ['', Validators.required]
-  }, {
-      validator: this.comparePassword('password', 'confirmPassword')
-  });
+  formValueIntialization(){
+      this.registerForm = this.formBuilder.group({
+        userName: ['', Validators.required],
+        fullName: ['', Validators.required],
+        address: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(4)]],
+        confirmPassword: ['', Validators.required]
+    }, {
+        validator: this.comparePassword('password', 'confirmPassword')
+    });
+    
+
 
   }
 
@@ -38,6 +40,8 @@ export class RegistrationComponent implements OnInit {
       get f() { return this.registerForm.controls; }
 
    
+
+
 
 
     comparePassword(controlName: string, matchingControlName: string) {
@@ -56,7 +60,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+     this.submitted = true;
     if (this.registerForm.invalid) {
         return;
     }else{
@@ -64,7 +68,7 @@ export class RegistrationComponent implements OnInit {
         (result: any) => {  
           console.log(result); 
           if (result.isSuccess) {
-            this.resetForm();
+            this.formValueIntialization();
             this.toastr.success('User Created Successfully!', 'Registration successful.');
           } else {
             if(result.status=='UserExist'){

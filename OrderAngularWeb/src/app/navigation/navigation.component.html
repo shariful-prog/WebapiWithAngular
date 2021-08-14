@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light"
-style="padding-left: 50px;padding-right: 50px;padding-top: 5px;padding-bottom: 5px;"
+style="padding: 15px 100px 15px;"
 >
 
 
@@ -19,7 +19,7 @@ style="padding-left: 50px;padding-right: 50px;padding-top: 5px;padding-bottom: 5
 
       </ul>
       <form class="form-inline my-2 my-lg-0">
-          <span style="margin-right: 10px;">{{UserInforObj.customerName}}</span>
+        <i class="fa fa-fw fa-user"></i> <span style="margin-right: 30px;">{{UserInforObj.customerName | uppercase}}</span>
         <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()">Logout</button>
       </form>
     </div>

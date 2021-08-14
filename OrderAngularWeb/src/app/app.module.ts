@@ -5,6 +5,7 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -18,6 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { InterceptorInterceptor } from './Authorization/interceptor.interceptor';
 import { ProductComponent } from './product/product.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -37,7 +39,8 @@ const routes: Routes = [
     OrderComponent,
     DashboardComponent,
     NavigationComponent,
-    ProductComponent
+    ProductComponent,
+    SpinnerComponent
     
 
   ],
@@ -50,6 +53,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     ToastrModule.forRoot(), 
+    MatDialogModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

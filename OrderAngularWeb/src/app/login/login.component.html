@@ -1,12 +1,11 @@
-<div class="tpCL" style="background-color: aliceblue;padding: 20px;">
+<div class="tpCL" style="padding: 20px;color: teal;">
     <div class="col-md-12">
-      <h1 class="text-center">Welcome</h1>
+      <h3 class="text-center">Customer Login Section</h3>
     </div>
     </div>
-<div class="container col-md-12">    
+<div class="container col-md-12" style="margin-top: 20px;">    
     <div class="row">
-        <div class="col-md-4 offset-md-4">
-            <h3>Login</h3>
+        <div class="col-md-4 offset-md-4" style="box-shadow: 5px 10px 18px #888888;padding: 40px;">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label>User Name</label>
@@ -26,7 +25,7 @@
                 </div>
                     <div style="margin-top:10px" class="form-group">
                         <!-- Button -->
-                        <button class="btn btn-success" [disabled]="!loginForm.valid">Login</button>
+                        <button class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
                     </div>
 
 

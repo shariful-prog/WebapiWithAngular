@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { UserProfile } from '../Models/user-profile.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +33,6 @@ export class UserServicsService {
    }
 
    getLoginUserInformation(){
-    return this.http.get(environment.baseUrl +'Authenticate/GetUserInfo')
+    return this.http.get<UserProfile>(environment.baseUrl +'Authenticate/GetUserInfo')
   }
 }

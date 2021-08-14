@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { OrderComponent } from '../order/order.component';
 import { OrdersService } from '../servics/orders.service';
+
 
 
 @Component({
@@ -10,7 +13,9 @@ import { OrdersService } from '../servics/orders.service';
 })
 export class DashboardComponent implements OnInit {
   orderList;
-  constructor(private router: Router,private orderService:OrdersService) { }
+  constructor(private router: Router,
+    private orderService:OrdersService,
+    private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.getOrders();
@@ -28,6 +33,17 @@ export class DashboardComponent implements OnInit {
         console.log(err);
       },
     );
+  }
+
+
+  AddNewOrder(){
+    const dialogConfig= new MatDialogConfig();
+    dialogConfig.autoFocus=true;
+    dialogConfig.disableClose=true;   
+    dialogConfig.width = "80%"
+    this.dialog.open(OrderComponent,dialogConfig).afterClosed().subscribe(res => {
+     this.getOrders();
+    });
   }
 
 }
