@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
+// This is for product http request 
 export class ProductService {
 
   constructor(private http:HttpClient) { }

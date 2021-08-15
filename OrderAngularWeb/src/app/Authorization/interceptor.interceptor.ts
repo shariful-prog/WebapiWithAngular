@@ -9,9 +9,10 @@ import { Observable } from 'rxjs';
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 
+//Interceptor service to set header with bearer token from local storage
+// without this token api would give unauthorized error
 @Injectable()
 export class InterceptorInterceptor implements HttpInterceptor {
-
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -24,8 +25,8 @@ export class InterceptorInterceptor implements HttpInterceptor {
               succ => { },
               err => {
                   if (err.status == 401){
-                      localStorage.removeItem('token');
-                      this.router.navigateByUrl('login');
+                      localStorage.removeItem('jwtToken');
+                      this.router.navigateByUrl('');
                   }
               }
           )

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserServicsService } from '../servics/user-servics.service';
 import { ToastrService } from 'ngx-toastr';
+import { AppHelper } from '../Helper/app-helper.model';
 
 @Component({
   selector: 'app-registration',
@@ -14,12 +15,15 @@ export class RegistrationComponent implements OnInit {
    submitted = false;
   constructor(private formBuilder: FormBuilder,
     private userServics:UserServicsService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    public appHelper:AppHelper
+    ) { }
 
   ngOnInit(): void {
    this.formValueIntialization();
   }
 
+  // validation and initialization of the products
   formValueIntialization(){
       this.registerForm = this.formBuilder.group({
         userName: ['', Validators.required],
@@ -36,7 +40,6 @@ export class RegistrationComponent implements OnInit {
 
   }
 
-      // convenience getter for easy access to form fields
       get f() { return this.registerForm.controls; }
 
    
@@ -44,6 +47,7 @@ export class RegistrationComponent implements OnInit {
 
 
 
+      // comparing password and confirm password
     comparePassword(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
@@ -58,6 +62,10 @@ export class RegistrationComponent implements OnInit {
         }
     }
   }
+
+
+
+  // customer registration procedure
 
   onSubmit() {
      this.submitted = true;

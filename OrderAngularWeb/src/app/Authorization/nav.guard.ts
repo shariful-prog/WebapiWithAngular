@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+// this Navguard will protect application from visiting by unathorized request
+//this will varify by jwtToken
 export class NavGuard implements CanActivate {
   
   constructor(private router: Router) {

@@ -15,6 +15,7 @@ import { OrdersService } from '../servics/orders.service';
 })
 export class DashboardComponent implements OnInit {
   orderList;
+  //showing totalorder count and order value in view
   totalOrderCount:number = 0;
   totalOrderValue:number = 0;
   constructor(private router: Router,
@@ -28,11 +29,13 @@ export class DashboardComponent implements OnInit {
   }
 
 
+  //for getting order by customer
   getOrders(){
     this.orderService.getCustomerOrders().subscribe(
       (response:any)=>{    
         this.orderList = response ;
         this.totalOrderCount = this.orderList.length;
+        //this will give total sum of order amount
         this.totalOrderValue = this.orderList.reduce((accum,item) => accum + item.grossValue, 0)
 
       }
@@ -43,18 +46,21 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-
+//I have used matdialog for dialog
   AddNewOrder(){
     const dialogConfig= new MatDialogConfig();
     dialogConfig.autoFocus=true;
     dialogConfig.disableClose=true;   
     dialogConfig.width = "80%"
+    // this will open up a dialog that will open up with orderComponent
+    //after the dialog close i have loaded the lastest order to show
     this.dialog.open(OrderComponent,dialogConfig).afterClosed().subscribe(() => {
      this.getOrders();
     });
   }
 
 
+  //Just or deleting purpose only
   deleteOrder(id){
     this.orderService.deleteOrder(id).subscribe(
       (response:any)=>{    

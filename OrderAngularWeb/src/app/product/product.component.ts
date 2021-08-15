@@ -29,6 +29,8 @@ export class ProductComponent implements OnInit {
       });
     }
 
+    // getting all products that already been saved
+
     getAllProducts(){
       this.productService.getProducts().subscribe(
         (response:any)=>{      
@@ -40,6 +42,8 @@ export class ProductComponent implements OnInit {
         }
       );
     }
+
+        //  product Save function 
     saveProduct(){
   
       this.productService.saveProduct(this.formModel.value).subscribe(
@@ -56,6 +60,8 @@ export class ProductComponent implements OnInit {
         }
       );
     }
+
+    // deleting products 
 
     deleteOrder(id){
       this.productService.deleteProduct(id).subscribe(

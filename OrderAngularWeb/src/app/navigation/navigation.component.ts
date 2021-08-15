@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserServicsService } from '../servics/user-servics.service';
 import { Router } from '@angular/router';
 import { UserProfile } from '../Models/user-profile.model';
+import { AppHelper } from '../Helper/app-helper.model';
 
 @Component({
   selector: 'app-navigation',
@@ -15,16 +16,18 @@ export class NavigationComponent implements OnInit {
     email:'',
     customerAddress:''
   };
+  currentMenu :string='';
   constructor(private service: UserServicsService,private router: Router) { }
 
   ngOnInit(): void {
     this.getUserInformation();
+
   }
 
+  //Just to show user name in top right side of nav bar
   getUserInformation(){
     this.service.getLoginUserInformation().subscribe(
       result => {
-        console.log(result);
         this.UserInforObj = result;
       },
       error => {
@@ -35,7 +38,7 @@ export class NavigationComponent implements OnInit {
   }
 
   logout(){
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwtToken');
     this.router.navigate(['/']);
   }
 

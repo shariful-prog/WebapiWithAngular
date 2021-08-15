@@ -21,6 +21,7 @@ import { InterceptorInterceptor } from './Authorization/interceptor.interceptor'
 import { ProductComponent } from './product/product.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { NavGuard } from './Authorization/nav.guard';
+import { AppHelper } from './Helper/app-helper.model';
 
 
 
@@ -55,7 +56,7 @@ const routes: Routes = [
     ToastrModule.forRoot(), 
     MatDialogModule
   ],
-  providers: [{
+  providers:[AppHelper,{
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorInterceptor,
     multi: true

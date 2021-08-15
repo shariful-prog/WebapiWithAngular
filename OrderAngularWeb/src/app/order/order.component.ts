@@ -16,12 +16,15 @@ import { UserServicsService } from '../servics/user-servics.service';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+  //this class for getting user profile
   UserInforObj:UserProfile = {
     customerName : '',
     email:'',
     customerAddress:''
   };
+  //this list will hold products to select for order
    aProductsList= [];
+
    selectedProductList : OrderDetails = {
     orderDetailId:0,
     orderMasterId:0,
@@ -38,8 +41,11 @@ export class OrderComponent implements OnInit {
   };
 
   productSelected:number = 0;
+  //this are to bind name in respect to if it is New order or Update order
   btnTxt:string="Save Order";
   headerTxt:string = "Make New Order";
+
+  //
 
   theOrderDetails : OrderDetails[] = []
   totalPrice=0;
@@ -60,12 +66,15 @@ export class OrderComponent implements OnInit {
    }
   }
 
+  // If user want to edit then this function would call
+  //setting redirected data to declared list or object
   setDataforEdit(data){
     this.btnTxt = "Update Order";
     this.headerTxt = "Update Current Order";
 
     this.theOrder = data;
     this.theOrderDetails = data.orderDetails;
+    //for calculation of product anmount to show in view
     for(var i=0;i<this.theOrderDetails.length;i++){
       this.theOrderDetails[i].totalAmount = this.theOrderDetails[i].quantity * this.theOrderDetails[i].price;
     }
@@ -84,14 +93,16 @@ export class OrderComponent implements OnInit {
 
   }
 
-  testF(){
-    const dialogConfig= new MatDialogConfig();
-    dialogConfig.autoFocus=true;
-    dialogConfig.disableClose=true;   
-    dialogConfig.width = "80%"
-    this.dialog.open(SpinnerComponent,dialogConfig);
-  }
+  // testF(){
+  //   const dialogConfig= new MatDialogConfig();
+  //   dialogConfig.autoFocus=true;
+  //   dialogConfig.disableClose=true;   
+  //   dialogConfig.width = "80%"
+  //   this.dialog.open(SpinnerComponent,dialogConfig);
+  // }
 
+
+  //
   getProducts(){
     this.productService.getProducts().subscribe(
       (response:any)=>{
@@ -103,6 +114,9 @@ export class OrderComponent implements OnInit {
     );
   }
 
+
+  // on product selection this will set that product data to input field
+  // like if X is selected then x price will be showen in input field
   onProductChange(event){
     var id = event.target.value;
     var product = this.aProductsList.find(a=>a.productId==id);
@@ -112,22 +126,29 @@ export class OrderComponent implements OnInit {
     this.selectedProductList.quantity = 0;
   }
 
+  // quantity change calculation
   productQtyChangeEvent(event){   
     let qty= event.target.value;
     this.selectedProductList.quantity = +qty;
     this.selectedProductList.totalAmount = this.selectedProductList.price*qty;   
   }
 
+
   addProductToList(){
-    if(this.selectedProductList.quantity>0){      
+    if(this.selectedProductList.quantity>0){    
+      // checking if product already select in the list
+      // duplicate product will not be selected  
       var aOrderItem =  this.theOrderDetails.find(a=>a.productId==this.selectedProductList.productId);
       if(aOrderItem){
         this.toaster.warning("Product already exist")
       }
       else{
+        // if not duplicate then will added to actual product list that user want to order
         this.theOrderDetails.push(this.selectedProductList);
-        //this is to reset product in select option
-        this.productSelected =0;
+        
+
+       // this will reset selected product that is in input field 
+      this.productSelected =0;
       this.selectedProductList = {
       orderDetailId:0,
       orderMasterId:0,
@@ -159,6 +180,8 @@ export class OrderComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
+  // Order Saving function
   saveOrder(){
     
     if(this.theOrder.grossValue==0){

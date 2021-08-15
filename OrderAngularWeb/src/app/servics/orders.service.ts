@@ -6,10 +6,12 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
+//This class is related to Order Service
+// all order http operation 
 export class OrdersService {
 
   constructor(private http:HttpClient) { }
-
 
   getCustomerOrders(){
     return this.http.get(environment.baseUrl+"Order/GetOrders");
@@ -25,6 +27,7 @@ export class OrdersService {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(OrderData);
 
+    // conditional http url for order update or new aorder
     if(ordermaster.orderMasterId > 0){
       return this.http.post(environment.baseUrl + "Order/UpdateOrder", body,{'headers':headers})
 

@@ -5,6 +5,9 @@ import { UserProfile } from '../Models/user-profile.model';
 @Injectable({
   providedIn: 'root'
 })
+
+// this will get user related data
+
 export class UserServicsService {
 
   constructor(private http:HttpClient) {

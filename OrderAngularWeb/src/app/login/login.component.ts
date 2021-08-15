@@ -3,27 +3,33 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserServicsService } from '../servics/user-servics.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { AppHelper } from '../Helper/app-helper.model';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
     private userServics:UserServicsService,
     private toastr: ToastrService,
-    private router: Router) { }
+    private router: Router,public appHelper:AppHelper
+    ) { }
 
   ngOnInit(): void {
     this.sessionCheck();
     this.resetForm();
+    this.appHelper.currentMenu = 'login';
   }
 
+  //checking if we find token then will redirect to dashboard
   sessionCheck(){
     if (localStorage.getItem('jwtToken') != null){
-      this.router.navigateByUrl['/home']
+      this.router.navigateByUrl['/dashboard']
     }
   }
 
@@ -35,6 +41,8 @@ export class LoginComponent implements OnInit {
   }
         get f() { return this.loginForm.controls; }
 
+
+  //login operation
   onSubmit() {
     if (this.loginForm.invalid) {
       return;
