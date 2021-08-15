@@ -22,4 +22,9 @@ export class ProductService {
     return this.http.post(environment.baseUrl + "Product", body);
   }
 
+  deleteProduct(id){
+    let params = new HttpParams().set("productId",id)
+    return this.http.delete(environment.baseUrl + "Product", { params:params})
+  }
+
 }

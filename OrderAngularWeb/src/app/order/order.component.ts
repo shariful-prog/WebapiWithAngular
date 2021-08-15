@@ -29,6 +29,8 @@ export class OrderComponent implements OnInit {
     GrossValue:0
   };
 
+  currentDate = new Date();
+
   theOrderDetails : OrderDetails[] = []
   totalPrice=0;
   constructor(
@@ -41,7 +43,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
-    this.testF();
+    // this.testF();
   }
 
   testF(){
@@ -140,13 +142,16 @@ export class OrderComponent implements OnInit {
    
       this.orderService.saveOrder(this.theOrder , this.theOrderDetails).subscribe(
         (response:any)=>{
-          if(response==true){
-            this.toaster.success("Order Saved");
+          if(response.isSuccess==true){
+            this.toaster.success("Order Saved Successfully");
             this.dialogRef.close();
+          }else{
+            this.toaster.warning("Something went wrong");
           }
         },    
         err => {
           console.log(err);
+          this.toaster.warning("Something went wrong");
         },
   
       );

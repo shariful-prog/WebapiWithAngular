@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -25,6 +25,11 @@ export class OrdersService {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(body1);
     return this.http.post(environment.baseUrl + "Order/SaveOrder", body,{'headers':headers})
+  }
+
+  deleteOrder(id){
+    let params = new HttpParams().set("orderId",id)
+    return this.http.delete(environment.baseUrl + "Order/DeleteOrder", { params:params})
   }
 }
 

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { OrderComponent } from '../order/order.component';
 import { OrdersService } from '../servics/orders.service';
+
 
 
 
@@ -13,9 +15,13 @@ import { OrdersService } from '../servics/orders.service';
 })
 export class DashboardComponent implements OnInit {
   orderList;
+  totalOrderCount:number = 0;
+  totalOrderValue:number = 0;
   constructor(private router: Router,
     private orderService:OrdersService,
-    private dialog:MatDialog) { }
+    private dialog:MatDialog,
+    private toaster:ToastrService
+    ) { }
 
   ngOnInit(): void {
     this.getOrders();
@@ -25,8 +31,10 @@ export class DashboardComponent implements OnInit {
   getOrders(){
     this.orderService.getCustomerOrders().subscribe(
       (response:any)=>{    
-        console.log(response);  
         this.orderList = response ;
+        this.totalOrderCount = this.orderList.length;
+        this.totalOrderValue = this.orderList.reduce((accum,item) => accum + item.grossValue, 0)
+
       }
       ,
       err => {
@@ -44,6 +52,28 @@ export class DashboardComponent implements OnInit {
     this.dialog.open(OrderComponent,dialogConfig).afterClosed().subscribe(res => {
      this.getOrders();
     });
+  }
+
+
+  deleteOrder(id){
+    this.orderService.deleteOrder(id).subscribe(
+      (response:any)=>{    
+        if(response.isSuccess){
+        this.toaster.success("Delete Successfull");
+        this.getOrders();
+        }else{
+            this.toaster.error("Something went wrong")
+        }
+      }
+      ,
+      err => {
+        console.log(err);
+        this.toaster.error("Something went wrong")
+      },
+    );
+
+    
+    
   }
 
 }

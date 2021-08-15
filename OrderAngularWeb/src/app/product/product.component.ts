@@ -57,4 +57,22 @@ export class ProductComponent implements OnInit {
       );
     }
 
+    deleteOrder(id){
+      this.productService.deleteProduct(id).subscribe(
+        (response:any)=>{    
+          if(response.isSuccess){
+          this.toaster.success("Delete Successfull");
+          this.getAllProducts();
+          }else{
+              this.toaster.error("Something went wrong")
+          }
+        }
+        ,
+        err => {
+          console.log(err);
+          this.toaster.error("Something went wrong")
+        },
+      );
+    }
+
 }
