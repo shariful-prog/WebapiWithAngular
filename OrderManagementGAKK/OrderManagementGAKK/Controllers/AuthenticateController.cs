@@ -21,43 +21,30 @@ namespace OrderManagementGAKK.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration _configuration;
-        private readonly IJWTAuthenticationManager jWTAuthenticationManager;
+        private readonly IJWTAuthenticationManager jwtAuth;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager,
-            IConfiguration configuration)
+       public AuthenticateController(UserManager<ApplicationUser> userManager,IConfiguration configuration,
+                                    IJWTAuthenticationManager jwt)
         {
             this.userManager = userManager;
             _configuration = configuration;
+            jwtAuth = jwt;
         }
 
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            var user = await userManager.FindByNameAsync(model.UserName);
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
-            {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var authSigningKey = Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                    new Claim("UserId", user.Id)
-                    }),
-                    Expires = DateTime.UtcNow.AddHours(1),
-                    SigningCredentials = new SigningCredentials(
-                        new SymmetricSecurityKey(authSigningKey),
-                        SecurityAlgorithms.HmacSha256Signature)
-                };
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token});
+            var token =await jwtAuth.AuthenticateAsync(model.UserName, model.Password);
 
+            if (token != null)
+            {
+                return Ok(new { token });
             }
             else
             {
                 return BadRequest(new { message = "Username or password is incorrect." });
+
             }
         }
 

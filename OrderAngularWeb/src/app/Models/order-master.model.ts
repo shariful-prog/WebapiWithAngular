@@ -1,4 +1,5 @@
 export class OrderMaster {
-    OrderMasterId:number;
-    GrossValue:number;
+    orderMasterId:number;
+    grossValue:number;
+    orderDate:Date;
 }

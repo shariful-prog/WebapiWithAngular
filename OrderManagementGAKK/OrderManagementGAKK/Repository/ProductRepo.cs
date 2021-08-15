@@ -55,7 +55,7 @@ namespace OrderManagementGAKK.Repository
             await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync()
+        public Task UpdateAsync(Product aProduct)
         {
             throw new NotImplementedException();
         }

@@ -10,7 +10,7 @@ namespace OrderManagementGAKK.Generic
         Task<IEnumerable<T1>> GetAll(string userId);
         Task<T1> GetById(int id);
         Task<T1> Insert(T1 entity);
-        Task UpdateAsync();
+        Task UpdateAsync(T1 entity);
         Task<bool> DeleteAsync(int id);
         Task SaveAsync();
 

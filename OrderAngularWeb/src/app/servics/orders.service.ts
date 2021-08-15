@@ -17,19 +17,32 @@ export class OrdersService {
 
   saveOrder(ordermaster , orderDetails){
   
-    var body1 = {
+    var OrderData = {
       ...ordermaster,
       OrderDetails: orderDetails
     };
 
     const headers = { 'content-type': 'application/json'}  
-    const body=JSON.stringify(body1);
+    const body=JSON.stringify(OrderData);
+
+    if(ordermaster.orderMasterId > 0){
+      return this.http.post(environment.baseUrl + "Order/UpdateOrder", body,{'headers':headers})
+
+    }else{
     return this.http.post(environment.baseUrl + "Order/SaveOrder", body,{'headers':headers})
+
+    }
+
   }
 
   deleteOrder(id){
     let params = new HttpParams().set("orderId",id)
     return this.http.delete(environment.baseUrl + "Order/DeleteOrder", { params:params})
+  }
+  getSelectedOrder(id){
+    let params = new HttpParams().set("orderId",id)
+    return this.http.get(environment.baseUrl + "Order/GetSingleOrder", { params:params})
+
   }
 }
 

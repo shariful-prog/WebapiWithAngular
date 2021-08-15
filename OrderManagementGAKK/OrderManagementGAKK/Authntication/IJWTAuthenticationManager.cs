@@ -8,5 +8,6 @@ namespace OrderManagementGAKK.Authntication
     public interface IJWTAuthenticationManager
     {
         Task<string> AuthenticateAsync(string username, string password);
+
     }
 }

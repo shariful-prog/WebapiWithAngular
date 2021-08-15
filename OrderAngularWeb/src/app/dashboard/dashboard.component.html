@@ -48,7 +48,7 @@
             <thead style="background-color: #f8f9fa!important;
            ">
                 <tr>
-                    <th>#</th>
+                    <th>SL</th>
                     <th>Customer</th>
                     <th>Order Value</th>
                     <th>Order Date</th>
@@ -61,7 +61,7 @@
                     <td> {{order.customerName}} </td>
                     <td> {{order.grossValue}} </td>
                     <td> {{order.orderDate |date:'dd/MM/yyyy'}} </td>
-                    <td> <button class="btn btn-sm btn-default" ><i class="fa fa-eye"></i></button>
+                    <td> <button class="btn btn-sm btn-default" (click)="getSelectedOrder(order.orderMasterId)"><i class="fa fa-eye"></i></button>
                       <button style="margin-left: 5px;" (click)="deleteOrder(order.orderMasterId)" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>

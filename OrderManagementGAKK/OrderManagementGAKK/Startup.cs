@@ -38,19 +38,15 @@ namespace OrderManagementGAKK
         {
 
             services.AddControllers();
-            // For Entity Framework  
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ConnStr")));
+            services.AddScoped<IJWTAuthenticationManager, JWTAuthenticationManager>();
             services.AddScoped<IGenRepository<Product>, ProductRepo>();
             services.AddScoped<IGenRepository<OrderMaster>, OrderRepo>();
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
                                                          .AllowAnyMethod()
                                                           .AllowAnyHeader()));
-            // For Identity  
-            /// identity Configuration for 
-            /// Making all false to test run
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;

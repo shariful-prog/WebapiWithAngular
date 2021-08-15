@@ -91,6 +91,34 @@ namespace OrderManagementGAKK.Controllers
         }
 
 
+        [HttpPost]
+        [Route("UpdateOrder")]
+        public async Task<Response> UpdateOrder(OrderMaster aInfo)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserId").Value;
+            if (aInfo != null && userId != null)
+            {
+                aInfo.OrderedBy = userId;
+                aInfo.OrderDate = DateTime.UtcNow;
+                try
+                {
+                    await _repository.UpdateAsync(aInfo);
+                    return new Response { IsSuccess = true };
+
+                }
+                catch(Exception ex)
+                {
+                    return new Response { IsError = true };
+                }
+            }
+            else
+            {
+                return new Response { IsError = true };
+            }
+
+        }
+
+
 
     }
 }

@@ -87,9 +87,10 @@ namespace OrderManagementGAKK.Repository
             await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync()
+        public async Task UpdateAsync(OrderMaster aItem)
         {
-            throw new NotImplementedException();
+             _context.OrderMaster.Update(aItem);
+           await _context.SaveChangesAsync();
         }
     }
 }

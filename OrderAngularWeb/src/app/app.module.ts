@@ -20,15 +20,15 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { InterceptorInterceptor } from './Authorization/interceptor.interceptor';
 import { ProductComponent } from './product/product.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { NavGuard } from './Authorization/nav.guard';
 
 
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
   {path:'registration',component:RegistrationComponent},
-  {path:'order',component:OrderComponent},
-  {path:'dashboard',component:DashboardComponent},
-  {path:'product',component:ProductComponent},
+  {path:'dashboard',component:DashboardComponent,canActivate:[NavGuard]},
+  {path:'product',component:ProductComponent,canActivate:[NavGuard]},
 ]
 
 @NgModule({

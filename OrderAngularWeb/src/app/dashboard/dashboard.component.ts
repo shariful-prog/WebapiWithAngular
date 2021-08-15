@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
     dialogConfig.autoFocus=true;
     dialogConfig.disableClose=true;   
     dialogConfig.width = "80%"
-    this.dialog.open(OrderComponent,dialogConfig).afterClosed().subscribe(res => {
+    this.dialog.open(OrderComponent,dialogConfig).afterClosed().subscribe(() => {
      this.getOrders();
     });
   }
@@ -74,6 +74,27 @@ export class DashboardComponent implements OnInit {
 
     
     
+  }
+
+
+  getSelectedOrder(id){
+    
+    this.orderService.getSelectedOrder(id).subscribe(
+      (response:any)=>{
+        
+        const dialogConfig= new MatDialogConfig();
+        dialogConfig.autoFocus=true;
+        dialogConfig.disableClose=true;
+        
+        dialogConfig.width = "80%"
+        dialogConfig.data = response
+        this.dialog.open(OrderComponent,dialogConfig);
+      }
+      ,
+      err => {
+        console.log(err);
+      },
+    );
   }
 
 }
