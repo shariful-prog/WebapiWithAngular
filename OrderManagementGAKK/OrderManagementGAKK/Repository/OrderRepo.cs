@@ -24,6 +24,8 @@ namespace OrderManagementGAKK.Repository
             if (order != null)
             {
               _context.Remove(order);
+                await _context.SaveChangesAsync();
+                
                 return true;
             }
             else
@@ -50,24 +52,28 @@ namespace OrderManagementGAKK.Repository
             return ordList;
         }
 
-        //public void TestFUnc()
-        //{
-        //    var orders =( from a in _context.OrderMaster.AsQueryable() 
-
-        //}
-
         public async Task<OrderMaster> GetById(int id)
         {
-            OrderMaster order = await _context.OrderMaster.Where(x=>x.OrderMasterId ==id)
-                .Include(a=>a.OrderDetails).SingleOrDefaultAsync();
-        
+            //OrderMaster order = await _context.OrderMaster.Where(x=>x.OrderMasterId ==id)
+            //    .Include(a=>a.OrderDetails).SingleOrDefaultAsync();
 
-            //var d = from s in order.OrderDetails
+            OrderMaster orderMaster = await _context.OrderMaster.Where(x => x.OrderMasterId == id).SingleOrDefaultAsync();
+            List<OrderDetail> oddetail =await (from detail in _context.OrderDetail
+                                                   join product in _context.Products on detail.ProductId equals product.ProductId
+                                                   where detail.OrderMasterId == id
+                                                   select new OrderDetail
+                                                   {
+                                                       OrderMasterId = detail.OrderMasterId,
+                                                       OrderDetailId = detail.OrderDetailId,
+                                                       ProductId = detail.ProductId,
+                                                       Price = detail.Price,
+                                                       Quantity = detail.Quantity,
+                                                       ProductName = product.ProductName
 
+                                                   }).ToListAsync();
 
-
-
-            return order;
+            orderMaster.OrderDetails = oddetail;
+            return orderMaster;
         }
 
         public async Task<OrderMaster> Insert(OrderMaster entity)

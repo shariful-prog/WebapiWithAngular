@@ -24,6 +24,7 @@ namespace OrderManagementGAKK.Repository
             if(product != null)
             {
                 _context.Remove(product);
+                await _context.SaveChangesAsync();
                 return true;
             }
             else

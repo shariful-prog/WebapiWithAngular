@@ -39,5 +39,24 @@ namespace OrderManagementGAKK.Controllers
         }
 
 
+        [HttpDelete]
+        public async Task<Response> DeleteProduct(int productId)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserId").Value;
+            bool isSuccess = await productRepo.DeleteAsync(productId);
+            if (isSuccess)
+            {
+                return new Response { IsSuccess = isSuccess };
+            }
+            else
+            {
+                return new Response { IsError = true };
+            }
+
+
+
+        }
+
+
     }
 }

@@ -74,7 +74,9 @@ namespace OrderManagementGAKK.Controllers
         public async Task<Response> DeleteOrder(int orderId)
         {
             string userId = User.Claims.First(c => c.Type == "UserId").Value;
-          bool isSuccess =  await _repository.DeleteAsync(orderId);
+              bool isSuccess =  await _repository.DeleteAsync(orderId);
+               
+
             if (isSuccess)
             {
                 return new Response { IsSuccess = isSuccess };
